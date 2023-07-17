@@ -21,7 +21,7 @@ const Houses = () => {
             {/* Search box */}
 
 
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mt-5'>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mt-10'>
                 {
                     houses.map(house => <HouseCard key={house._id} house={house} />)
                 }
