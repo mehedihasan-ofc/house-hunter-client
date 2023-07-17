@@ -8,9 +8,10 @@ const HouseCard = ({ house }) => {
 
     return (
 
-        <div className="card w-full mb-5 md:mb-0 md:w-96 bg-base-100 shadow group rounded-none">
-            <figure><img className='relative transition duration-300 ease-in-out group-hover:scale-110' src={picture} alt="Shoes" /></figure>
-            <span className='bg-black bg-opacity-30 p-3 rounded-full text-white absolute top-5 right-5 text-xl'><FaRegStar /></span>
+        <div className="card w-full mb-5 md:mb-0 md:w-96 bg-base-100 shadow rounded-none">
+            <figure><img className='relative transition duration-300 ease-in-out' src={picture} alt="Shoes" /></figure>
+            {/* <span className='bg-black bg-opacity-30 px-2 py-1 rounded-md text-white absolute top-5 left-5 text-sm'>{city}</span> */}
+            <span className='bg-black bg-opacity-30 px-2 py-1 rounded-md text-white absolute top-5 right-5 text-xs'>{city}</span>
             <div className="card-body">
                 <h2 className="card-title font-secondary font-extrabold mb-2">{name}</h2>
                 <div className="card-actions justify-between">
