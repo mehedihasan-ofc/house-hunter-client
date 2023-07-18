@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
 
@@ -19,8 +20,9 @@ const Register = () => {
             body: JSON.stringify(data),
         })
             .then((res) => res.json())
-            .then((data) => {
-                if (data.result.insertedId) {
+            .then((resData) => {
+                console.log(resData);
+                if (resData.result.insertedId) {
                     toast.success(`Registered successfully`, {
                         position: "top-right",
                         autoClose: 2000,
@@ -32,8 +34,10 @@ const Register = () => {
                         theme: "light",
                     });
 
-                    localStorage.setItem('access-email', data.email);
-                    localStorage.setItem('access-token', data.token);
+                    localStorage.setItem('access-email', resData.email);
+                    localStorage.setItem('access-token', resData.token);
+                    
+                    navigate(data.role === "House Owner" ? '/dashboard/house-list' : '/dashboard/my-bookings');
                 }
             })
             .catch(error => {

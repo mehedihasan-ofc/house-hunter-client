@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -19,8 +20,8 @@ const Login = () => {
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
-      .then((data) => {
-        if (data.result.acknowledged) {
+      .then((resData) => {
+        if (resData.result.acknowledged) {
           toast.success(`Login successfully`, {
             position: "top-right",
             autoClose: 2000,
@@ -32,9 +33,16 @@ const Login = () => {
             theme: "light",
           });
 
-          localStorage.setItem('access-email', data.email);
-          localStorage.setItem('access-token', data.token);
+          localStorage.setItem('access-email', resData.email);
+          localStorage.setItem('access-token', resData.token);
+
+          fetch(`http://localhost:5000/get-role?email=${data?.email}`)
+          .then(res => res.json())
+          .then(data => {
+            navigate(data.role === "House Owner" ? '/dashboard/house-list' : '/dashboard/my-bookings');
+          })
         }
+
       })
       .catch(error => {
         toast.error('Email not found', {
