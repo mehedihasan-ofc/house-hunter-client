@@ -1,6 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { FaHome } from 'react-icons/fa';
+import HouseOwnerMenu from '../components/Dashboard/HouseOwnerMenu/HouseOwnerMenu';
+import HouseRenterMenu from '../components/Dashboard/HouseRenterMenu/HouseRenterMenu';
 
 const DashboardLayout = () => {
+
+    const isHouseOwner = false;
+
     return (
         <div className="drawer lg:drawer-open">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -11,10 +18,14 @@ const DashboardLayout = () => {
             </div>
             <div className="drawer-side">
                 <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
+
                 <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
                     {/* Sidebar content here */}
-                    <li><a>Sidebar Item 1</a></li>
-                    <li><a>Sidebar Item 2</a></li>
+
+                    {isHouseOwner ? <HouseOwnerMenu /> : <HouseRenterMenu />}
+
+                    <div className="divider"></div>
+                    <li className='font-medium text-sm'><Link to='/'><FaHome /> Home</Link></li>
                 </ul>
 
             </div>

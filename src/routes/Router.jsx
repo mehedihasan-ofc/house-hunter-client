@@ -6,6 +6,7 @@ import Register from "../pages/Auth/Register/Register";
 import DashboardLayout from "../layouts/DashboardLayout";
 import HouseList from "../pages/Dashboard/HouseList/HouseList";
 import AddNewHouse from "../pages/Dashboard/AddNewHouse/AddNewHouse";
+import MyBookings from "../pages/Dashboard/MyBookings/MyBookings";
 
 const router = createBrowserRouter([
     {
@@ -31,12 +32,16 @@ const router = createBrowserRouter([
         element: <DashboardLayout />,
         children: [
             {
-                path: '/house-list',
+                path: '/dashboard/house-list',
                 element: <HouseList />
             },
             {
-                path: '/add-new-house',
+                path: '/dashboard/add-new-house',
                 element: <AddNewHouse />
+            },
+            {
+                path: '/dashboard/my-bookings',
+                element: <MyBookings />
             }
         ]
     }
