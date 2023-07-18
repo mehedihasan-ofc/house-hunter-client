@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Logo from '../../../assets/logo.png';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,8 +60,11 @@ const Header = () => {
               </button>
             </div>
             {/* Logo */}
-            <div className="flex items-center flex-grow">
-              <h1 className="text-white mx-auto">Logo</h1>
+            <div className="flex justify-center items-center flex-grow">
+              {/* <h1 className="text-white mx-auto">Logo</h1> */}
+              <div className='w-44'>
+                <img src={Logo} alt="Logo" />
+              </div>
             </div>
           </div>
 

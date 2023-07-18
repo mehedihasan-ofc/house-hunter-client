@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import axios from 'axios';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -9,7 +10,26 @@ const Register = () => {
 
     const onSubmit = (data) => {
         console.log(data);
-        // Perform form submission, validation, and API calls here
+
+        // if(data) {
+        //     axios.post('http://localhost:5000/api/register', data)
+        //     .then(res => {
+        //         console.log(res.data);
+        //     })
+        // }
+
+        fetch('http://localhost:5000/api/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        })
+
     };
 
     const togglePasswordVisibility = () => {
