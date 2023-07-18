@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -9,7 +10,44 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    // Perform login functionality here
+
+    fetch(`http://localhost:5000/login`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result.acknowledged) {
+          toast.success(`Login successfully`, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+
+          localStorage.setItem('access-email', data.email);
+          localStorage.setItem('access-token', data.token);
+        }
+      })
+      .catch(error => {
+        toast.error('Email not found', {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
   };
 
   const togglePasswordVisibility = () => {

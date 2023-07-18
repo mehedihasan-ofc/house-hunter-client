@@ -2,33 +2,53 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = (data) => {
-        console.log(data);
 
-        // if(data) {
-        //     axios.post('http://localhost:5000/api/register', data)
-        //     .then(res => {
-        //         console.log(res.data);
-        //     })
-        // }
-
-        fetch('http://localhost:5000/api/register', {
+        // send new user data to server
+        fetch(`http://localhost:5000/register`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'content-type': 'application/json',
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.result.insertedId) {
+                    toast.success(`Registered successfully`, {
+                        position: "top-right",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+
+                    localStorage.setItem('access-email', data.email);
+                    localStorage.setItem('access-token', data.token);
+                }
+            })
+            .catch(error => {
+                toast.error('Email already exists', {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+            })
+
 
     };
 
