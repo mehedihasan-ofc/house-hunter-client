@@ -3,10 +3,11 @@ import { Link, Outlet } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 import HouseOwnerMenu from '../components/Dashboard/HouseOwnerMenu/HouseOwnerMenu';
 import HouseRenterMenu from '../components/Dashboard/HouseRenterMenu/HouseRenterMenu';
+import useHouseOwner from '../hooks/useHouseOwner';
 
 const DashboardLayout = () => {
 
-    const isHouseOwner = false;
+    const [isHouseOwner] = useHouseOwner();
 
     return (
         <div className="drawer lg:drawer-open">

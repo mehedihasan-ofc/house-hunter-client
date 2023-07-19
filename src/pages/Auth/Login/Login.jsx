@@ -3,10 +3,13 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { toast } from 'react-toastify';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const [axiosSecure] = useAxiosSecure();
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -36,11 +39,20 @@ const Login = () => {
           localStorage.setItem('access-email', resData.email);
           localStorage.setItem('access-token', resData.token);
 
+          // const { data: isRole } = useQuery({
+          //   queryKey: ['isRole', userEmail],
+          //   enabled: !!localStorage.getItem('access-email') && !!localStorage.getItem('access-token'),
+          //   queryFn: async () => {
+          //     const res = await axiosSecure.get(`/get-role?email=${localStorage.getItem('access-email')}`)
+          //     return res.data.houseOwner;
+          //   }
+          // })
+
           fetch(`http://localhost:5000/get-role?email=${data?.email}`)
-          .then(res => res.json())
-          .then(data => {
-            navigate(data.role === "House Owner" ? '/dashboard/house-list' : '/dashboard/my-bookings');
-          })
+            .then(res => res.json())
+            .then(data => {
+              navigate(data.role === "House Owner" ? '/dashboard/house-list' : '/dashboard/my-bookings');
+            })
         }
 
       })
