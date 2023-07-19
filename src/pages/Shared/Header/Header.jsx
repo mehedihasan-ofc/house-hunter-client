@@ -15,7 +15,28 @@ const Navbar = () => {
   };
 
   const handleSignOut = () => {
-    console.log('logOut');
+    fetch('https://house-hunter-server-mehedihasan-ofc.vercel.app/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(token),
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Clear the token from local storage
+          localStorage.removeItem('access-token');
+          localStorage.removeItem('access-email');
+          
+          navigate('/login');
+        } else {
+          throw new Error('Logout failed');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle the logout error
+      });
   }
 
   return (
@@ -32,7 +53,6 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <NavLink to="/" className={({ isActive }) => isActive ? "text-[#FF7703]" : "text-white"}>Home</NavLink>
-              <NavLink to="/contact" className={({ isActive }) => isActive ? "text-[#FF7703]" : "text-white"}>Contact</NavLink>
 
               {token && email && <NavLink to={isHouseOwner ? '/dashboard/house-list' : '/dashboard/my-bookings'} className={({ isActive }) => isActive ? "text-[#FF7703]" : "text-white"}>Dashboard</NavLink>}
 
@@ -87,8 +107,10 @@ const Navbar = () => {
         <div className={`${isMenuOpen ? 'block' : 'hidden'} md:hidden`} id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link to="/" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</Link>
-            <Link to="/about" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</Link>
-            <Link to="/contact" className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</Link>
+
+            {token && email && <Link to={isHouseOwner ? '/dashboard/house-list' : '/dashboard/my-bookings'} className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</Link>}
+
+            {token && email ? <button onClick={handleSignOut} className='btn btn-sm'>Log Out</button> : <button onClick={() => navigate('/login')} className='btn btn-sm'>Login</button>}
           </div>
         </div>
       </div>
