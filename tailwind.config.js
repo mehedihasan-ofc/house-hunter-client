@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'primary': ['Roboto', 'sans-serif'],
+    }
   },
   plugins: [require("daisyui")],
 }
