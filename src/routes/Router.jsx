@@ -7,6 +7,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import HouseList from "../pages/Dashboard/HouseList/HouseList";
 import AddNewHouse from "../pages/Dashboard/AddNewHouse/AddNewHouse";
 import MyBookings from "../pages/Dashboard/MyBookings/MyBookings";
+import HouseEdit from "../pages/Dashboard/HouseEdit/HouseEdit";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/house-list',
                 element: <HouseList />
+            },
+            {
+                path: '/dashboard/house-edit/:id',
+                element: <HouseEdit />
             },
             {
                 path: '/dashboard/add-new-house',

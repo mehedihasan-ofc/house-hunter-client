@@ -1,6 +1,8 @@
 import React from 'react';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const HouseList = () => {
 
@@ -15,6 +17,36 @@ const HouseList = () => {
             return res.data;
         }
     })
+
+    const handleDelete = id => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch(`http://localhost:5000/houses/${id}`, {
+                    method: "DELETE"
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        refetch();
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }
+                    })
+            }
+        })
+    }
 
     return (
         <div className='my-container my-5'>
@@ -31,9 +63,9 @@ const HouseList = () => {
                             <th>AVAIL. Date</th>
                             <th>br</th>
                             <th>BTHRM</th>
-                            <th>City</th>
                             <th>address</th>
-                            {/* <th>Feedback</th> */}
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,14 +99,16 @@ const HouseList = () => {
                                     <span className='badge badge-secondary badge-outline'>{house.bathrooms}</span>
                                 </td>
                                 <td>
-                                    <span className='badge badge-secondary badge-outline'>{house.city}</span>
-                                </td>
-                                <td>
                                     <span className='badge badge-secondary badge-outline'>{house.address}</span>
                                 </td>
-                                {/* {myClass.feedback && <td>
-                                    <button className="btn btn-ghost btn-xs">{myClass.feedback}</button>
-                                </td>} */}
+                                <td>
+                                    <Link to={`/dashboard/house-edit/${house._id}`}>
+                                        <button className="btn btn-xs">Edit</button>
+                                    </Link>
+                                </td>
+                                <td>
+                                    <button onClick={() => handleDelete(house._id)} className="btn btn-xs">Delete</button>
+                                </td>
                             </tr>)
                         }
                     </tbody>
