@@ -22,3 +22,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
+// className={location.pathname === '/' ? 'absolute top-0 left-0 w-full text-white py-2 px-6 z-10' : 'bg-green-600'}
