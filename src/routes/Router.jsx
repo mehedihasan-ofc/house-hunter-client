@@ -39,7 +39,7 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/house-edit/:id',
                 element: <HouseEdit />,
-                loader: ({ params }) => fetch(`http://localhost:5000/house-edit/${params.id}`)
+                loader: ({ params }) => fetch(`https://house-hunter-server-mehedihasan-ofc.vercel.app/house-edit/${params.id}`)
             },
             {
                 path: '/dashboard/add-new-house',

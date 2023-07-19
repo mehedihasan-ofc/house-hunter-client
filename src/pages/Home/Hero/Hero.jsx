@@ -19,7 +19,7 @@ const Hero = () => {
     const { data: sliders = [], isLoading } = useQuery({
         queryKey: ['sliders'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/sliders');
+            const res = await fetch('https://house-hunter-server-mehedihasan-ofc.vercel.app/sliders');
             return res.json();
         }
     });

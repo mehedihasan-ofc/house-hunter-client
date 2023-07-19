@@ -30,7 +30,7 @@ const HouseList = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                fetch(`http://localhost:5000/houses/${id}`, {
+                fetch(`https://house-hunter-server-mehedihasan-ofc.vercel.app/houses/${id}`, {
                     method: "DELETE"
                 })
                     .then(res => res.json())

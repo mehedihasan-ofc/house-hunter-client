@@ -7,7 +7,7 @@ const Houses = () => {
     const { data: houses = [], isLoading } = useQuery({
         queryKey: ['houses'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/houses');
+            const res = await fetch('https://house-hunter-server-mehedihasan-ofc.vercel.app/houses');
             return res.json();
         }
     });

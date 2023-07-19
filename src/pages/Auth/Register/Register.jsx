@@ -12,7 +12,7 @@ const Register = () => {
     const onSubmit = (data) => {
 
         // send new user data to server
-        fetch(`http://localhost:5000/register`, {
+        fetch(`https://house-hunter-server-mehedihasan-ofc.vercel.app/register`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

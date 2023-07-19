@@ -15,7 +15,7 @@ const Login = () => {
   const onSubmit = (data) => {
     console.log(data);
 
-    fetch(`http://localhost:5000/login`, {
+    fetch(`https://house-hunter-server-mehedihasan-ofc.vercel.app/login`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -48,7 +48,7 @@ const Login = () => {
           //   }
           // })
 
-          fetch(`http://localhost:5000/get-role?email=${data?.email}`)
+          fetch(`https://house-hunter-server-mehedihasan-ofc.vercel.app/get-role?email=${data?.email}`)
             .then(res => res.json())
             .then(data => {
               navigate(data.role === "House Owner" ? '/dashboard/house-list' : '/dashboard/my-bookings');
