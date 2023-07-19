@@ -16,8 +16,6 @@ const HouseList = () => {
         }
     })
 
-    console.log(houses);
-
     return (
         <div className='my-container my-5'>
             <div className="overflow-x-auto bg-white shadow-md">
